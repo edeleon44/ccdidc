@@ -23,22 +23,20 @@ passport.deserializeUser((id, done) => {
       {
         clientID: keys.googleClientID,
         clientSecret: keys.googleClientSecret,
-        callbackURL: '/auth/google/callback'
+        callbackURL: '/auth/google/callback',
+        proxy: true
+
       },
-      (accessToken, refreshToken, profile, done) => {
-        console.log(new User);
-        User.findOne({ googleId: profile.id }).then(existingUser => {
-              if (existingUser) {
-              // we already have a record with the given profile Id
-              done(null, existingUser);
+      async (accessToken, refreshToken, profile, done) => {
+        const existingUser = await User.findOne({ googleId: profile.id });
+                if (existingUser) {
+                // we already have a record with the given profile Id
+                return done(null, existingUser);
 
-            } else {
-              // We don't have a user record with this ID
-              new User({ googleId: profile.id }).save()
-                .then(user => done(null, user));
-
-        };
-      });
+              }
+                // We don't have a user record with this ID
+                const user = await new User({ googleId: profile.id }).save();
+                done(null, user);
     }
   )
 );
