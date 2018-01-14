@@ -22,10 +22,8 @@ class App extends Component {
 
   render() {
     return (
-
-              
-                <div className="container ">
-                  <BrowserRouter>
+              <div className="container">
+                <BrowserRouter>
                     <div>
                   <Header />
                   <Route exact path="/" component={Posts} />
@@ -35,8 +33,8 @@ class App extends Component {
                   <Route path="/Suggested" component={Suggested} />
                   <Route path="/Trending" component={Trending} />
                   </div>
-              </BrowserRouter>
-            </div>
+                </BrowserRouter>
+              </div>
     );
   }
 }

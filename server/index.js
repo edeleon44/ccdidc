@@ -15,8 +15,7 @@ const app = express();
 
 mongoose.connect(keys.mongouri);
 
-authRoutes(app);
-postRoutes(app);
+
 
 
 app.use(
@@ -28,8 +27,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./routes/postRoutes')(app);
-require('./routes/authRoutes')(app);
+authRoutes(app);
+postRoutes(app);
 
 
 if (process.env.NODE_ENV === 'production') {
